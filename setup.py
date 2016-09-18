@@ -41,7 +41,7 @@ setup(
     ],
     license='MIT',
     install_requires=get_requirements('requirements/setup.txt'),
-    tests_require=get_requirements('requirements/test.txt'),
+#    tests_require=get_requirements('requirements/test.txt'),
     include_package_data=True,
     test_suite='run_tests.run_tests',
     zip_safe=False,
