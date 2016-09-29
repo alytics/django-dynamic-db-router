@@ -133,3 +133,25 @@ class TestDynamicDbRouterDefaults(TestCase):
         router = DynamicDbRouter()
         allow_migrate = router.allow_migrate(None, None)
         self.assertEqual(allow_migrate, None)
+
+    def test_db_for_read_restored(self):
+        router = DynamicDbRouter()
+        db_for_read = router.db_for_read('slave-read')
+        self.assertIn(db_for_read, ['default', 'slave-read'])
+
+        with in_database('test'):
+            G(TestModel, name='Michael Bluth')
+            context_count = TestModel.objects.count()
+
+        self.assertIn(db_for_read, ['default', 'slave-read'])        
+
+    def test_db_for_write_restored(self):
+        router = DynamicDbRouter()
+        db_for_read = router.db_for_read('default-write')
+        self.assertIn(db_for_read, ['default', 'default-write'])
+
+        with in_database('test'):
+            G(TestModel, name='Michael Bluth')
+            context_count = TestModel.objects.count()
+
+        self.assertIn(db_for_read, ['default', 'default-write'])        
