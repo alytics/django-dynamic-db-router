@@ -9,7 +9,7 @@ def configure_settings():
     """
     if not settings.configured:
         # Determine the database settings depending on if a test_db var is set in CI mode or not
-        test_db = os.environ.get('DB', 'postgres')
+        test_db = os.environ.get('DB', 'sqlite')
         if test_db == 'postgres':
             db_config_one = {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',

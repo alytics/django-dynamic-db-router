@@ -1,5 +1,11 @@
 """
 Provides the ability to run test on a standalone Django app.
+
+!! WARNING !!
+tests fails by default with Exception:
+TypeError: allow_migrate() got multiple values for keyword argument 'model'
+
+you need comment DynamicDbRouter.allow_migrate method 
 """
 import sys
 from optparse import OptionParser
@@ -35,7 +41,7 @@ def run_tests(*test_args, **kwargs):
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('--verbosity', dest='verbosity', action='store', default=1, type=int)
-    parser.add_options(NoseTestSuiteRunner.options)
+    parser.add_options(NoseTestSuiteRunner.django_opts)
     (options, args) = parser.parse_args()
 
     run_tests(*args, **options.__dict__)
